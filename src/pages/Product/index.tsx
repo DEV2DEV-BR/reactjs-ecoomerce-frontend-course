@@ -1,18 +1,17 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { productsFakeData } from "../../data/fakeData";
 import { Button } from "../../components/ui/Button";
 import { CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { ProductCard } from "../../components/ProductCard";
 import styles from "./product.module.scss";
+import { useGlobalContext } from "../../context/global";
 
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const product = productsFakeData.find((product) => product.id === id);
-  const relatedProducts = productsFakeData
-    .filter((p) => p.id !== id)
-    .slice(0, 4);
+  const { productsList } = useGlobalContext();
+  const product = productsList?.find((product) => product.id === id);
+  const relatedProducts = productsList?.filter((p) => p.id !== id).slice(0, 4);
 
   if (!product) {
     return (
@@ -73,7 +72,7 @@ export default function Product() {
       <div className={styles.relatedProducts}>
         <h2>Produtos Relacionados</h2>
         <div className={styles.carousel}>
-          {relatedProducts.map((product) => (
+          {relatedProducts?.map((product) => (
             <ProductCard
               key={product.id}
               {...product}

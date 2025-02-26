@@ -1,8 +1,9 @@
 import { ProductCard } from "../../components/ProductCard";
-import { productsFakeData } from "../../data/fakeData";
 import styles from "./home.module.scss";
+import { useGlobalContext } from "../../context/global";
 
 function Home() {
+  const { productsList } = useGlobalContext();
   return (
     <div className={styles.container}>
       <div className={styles.banner}>
@@ -10,7 +11,7 @@ function Home() {
       </div>
 
       <div className={styles.products}>
-        {productsFakeData.map((product) => (
+        {productsList.map((product) => (
           <ProductCard
             onAddToCart={() => {}}
             onRemoveFromCart={() => {}}

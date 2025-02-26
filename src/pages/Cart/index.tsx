@@ -2,10 +2,11 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "../../components/ui/Button";
 import { Link } from "react-router-dom";
 import styles from "./cart.module.scss";
-import { productsFakeData } from "../../data/fakeData";
+import { useGlobalContext } from "../../context/global";
 
 function Cart() {
-  const cartItems = productsFakeData.slice(0, 3);
+  const { productsList } = useGlobalContext();
+  const cartItems = productsList?.slice(0, 3) ?? [];
 
   const total = cartItems.reduce((acc, item) => acc + item.price, 0);
   const formattedTotal = new Intl.NumberFormat("pt-BR", {
