@@ -1,12 +1,24 @@
 import { CheckCircleOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui/Button";
-import { useGlobalContext } from "../../context/global";
 import useFormatter from "../../hooks/utils/use-formatter";
 import styles from "./success.module.scss";
 
-export default function Success() {
-  const { cart } = useGlobalContext();
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  title: string;
+  description: string;
+  detailedDescription: string;
+}
+
+interface SuccessProps {
+  cart: CartItem[];
+}
+
+const SuccessComponent: React.FC<SuccessProps> = ({ cart }) => {
   const { formatMoney } = useFormatter();
 
   const total = cart.reduce((acc, item) => acc + item.price, 0);
@@ -48,4 +60,6 @@ export default function Success() {
       </div>
     </div>
   );
-}
+};
+
+export default SuccessComponent;

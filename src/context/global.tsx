@@ -1,8 +1,8 @@
 import constate from "constate";
 import { useEffect, useState } from "react";
-import { Product } from "../types/ProductType";
 import { useGetProducts } from "../hooks/integration/auth/mutations";
 import { useCustomLocalStorage } from "../hooks/utils/use-custom-local-storage";
+import { Product } from "../types/ProductType";
 
 function useGlobal() {
   const [cart, setCart] = useCustomLocalStorage<Product[]>("cart", []);
@@ -42,7 +42,11 @@ function useGlobal() {
     );
   };
 
-  return { cart, productsList, addToCart, removeFromCart };
+  const addCheckout = (products: Product[]) => {
+    addCheckout(products);
+  };
+
+  return { cart, productsList, addToCart, removeFromCart, addCheckout };
 }
 
 export const [GlobalProvider, useGlobalContext] = constate(useGlobal);
