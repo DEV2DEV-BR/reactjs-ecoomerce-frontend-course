@@ -30,6 +30,7 @@ function Cart() {
               <div key={item.id} className={styles.cartItem}>
                 <Link to={`/product/${item.id}`} className={styles.productInfo}>
                   <img src={item.imageUrl} alt={item.title} />
+
                   <div>
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>

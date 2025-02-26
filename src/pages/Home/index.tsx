@@ -1,6 +1,6 @@
 import { ProductCard } from "../../components/ProductCard";
-import styles from "./home.module.scss";
 import { useGlobalContext } from "../../context/global";
+import styles from "./home.module.scss";
 
 function Home() {
   const { productsList } = useGlobalContext();

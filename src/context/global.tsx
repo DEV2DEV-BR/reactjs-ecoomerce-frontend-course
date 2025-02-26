@@ -7,14 +7,16 @@ import {
 import { useCustomLocalStorage } from "../hooks/utils/use-custom-local-storage";
 import { CheckoutResponse } from "../types/CheckoutType";
 import { Product } from "../types/ProductType";
+
 function useGlobal() {
+  const { data: products } = useGetProducts();
+  const { mutateAsync: addCheckoutMutateAsync, data } = useAddCheckout();
+
   const [cart, setCart, removeCart] = useCustomLocalStorage<Product[]>(
     "cart",
     []
   );
   const [saleResume, setSaleResume] = useState<CheckoutResponse | null>(null);
-  const { data: products } = useGetProducts();
-  const { mutateAsync: addCheckoutMutateAsync, data } = useAddCheckout();
   const [productsList, setProductsList] = useState<Product[]>([]);
 
   useEffect(() => {
