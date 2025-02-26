@@ -1,20 +1,21 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import s from "./header.module.scss";
+import { Link } from "react-router-dom";
+import styles from "./header.module.scss";
 
 function Header() {
   return (
-    <header className={s.container}>
-      <strong>E-commerce</strong>
+    <header className={styles.container}>
+      <Link to="/">
+        <strong>E-commerce Developer</strong>
+      </Link>
 
       <nav>
-        <a href="#">Home</a>
-        <a href="#">Produtos</a>
-        <a href="#">Carrinho</a>
+        <Link to="/">Home</Link>
+        <Link to="/cart">
+          <span>Carrinho</span>
+          <ShoppingCartOutlined size={24} />
+        </Link>
       </nav>
-
-      <div>
-        <ShoppingCartOutlined />
-      </div>
     </header>
   );
 }

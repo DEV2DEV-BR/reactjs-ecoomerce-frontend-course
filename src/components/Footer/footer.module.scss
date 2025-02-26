@@ -1,0 +1,26 @@
+.footer {
+  width: 100%;
+  padding: 2rem 0;
+  background: var(--gray-800);
+  margin-top: 4rem;
+  border-top: 1px solid var(--gray-700);
+}
+
+.content {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+
+  strong {
+    display: block;
+    color: var(--primary);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 0.875rem;
+  }
+}

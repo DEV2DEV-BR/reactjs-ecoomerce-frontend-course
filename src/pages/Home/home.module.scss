@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 300px;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../../assets/banner.jpg");
+  background-size: cover;
+  background-position: center;
+
+  h1 {
+    font-size: 64px;
+    color: white;
+    text-shadow: 8px 8px 12px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}

@@ -1,0 +1,135 @@
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 16px;
+
+  h1 {
+    color: var(--title);
+    margin-bottom: 32px;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cartItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--white);
+  padding: 16px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.productInfo {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  text-decoration: none;
+
+  img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  div {
+    flex: 1;
+
+    h3 {
+      color: var(--title);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: var(--text);
+      font-size: 14px;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+  }
+}
+
+.price {
+  display: block;
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.removeButton {
+  background: transparent;
+  border: 0;
+  color: var(--red-500);
+  cursor: pointer;
+  transition: filter 0.2s;
+  padding: 8px;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
+
+.summary {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 8px;
+  position: sticky;
+  top: 32px;
+
+  h2 {
+    color: var(--title);
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+}
+
+.summaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  color: var(--title);
+  font-size: 18px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--gray-100);
+  margin-bottom: 16px;
+}
+
+.emptyCart {
+  text-align: center;
+  padding: 64px 0;
+  color: var(--text);
+
+  p {
+    margin-bottom: 32px;
+  }
+}
