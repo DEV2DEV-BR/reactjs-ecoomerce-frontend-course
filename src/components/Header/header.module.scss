@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 52px;
+  padding: 0 16px;
+
+  strong {
+    color: #56b280;
+    cursor: pointer;
+
+    &:hover {
+      color: #288552;
+    }
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+      color: rgb(92, 88, 88);
+    }
+  }
+
+  nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  svg {
+    cursor: pointer;
+  }
+}
