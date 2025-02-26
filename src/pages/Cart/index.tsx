@@ -1,38 +1,16 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Button } from "../../components/ui/Button";
 import { Link } from "react-router-dom";
-import styles from "./cart.module.scss";
+import { Button } from "../../components/ui/Button";
 import { useGlobalContext } from "../../context/global";
 import useFormatter from "../../hooks/utils/use-formatter";
-import { Product } from "../../types/ProductType";
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  title: string;
-  description: string;
-  detailedDescription: string;
-}
+import styles from "./cart.module.scss";
 
-interface CartProps {
-  cart: CartItem[];
-}
-
-const CartComponent: React.FC<CartProps> = ({ cart }) => {
-  const { removeFromCart, addCheckout } = useGlobalContext();
+function Cart() {
+  const { cart, removeFromCart, addCheckout } = useGlobalContext();
   const { formatMoney } = useFormatter();
 
-  const total = cart.reduce(
-    (acc: number, item: CartItem) => acc + item.price,
-    0
-  );
+  const total = cart.reduce((acc, item) => acc + item.price, 0);
   const formattedTotal = formatMoney(total);
-
-  const products: Product[] = cart.map((item: CartItem) => ({
-    ...item,
-    isInCart: true,
-  }));
 
   return (
     <div className={styles.container}>
@@ -48,7 +26,7 @@ const CartComponent: React.FC<CartProps> = ({ cart }) => {
       ) : (
         <div className={styles.content}>
           <div className={styles.cartItems}>
-            {cart.map((item: CartItem) => (
+            {cart.map((item) => (
               <div key={item.id} className={styles.cartItem}>
                 <Link to={`/product/${item.id}`} className={styles.productInfo}>
                   <img src={item.imageUrl} alt={item.title} />
@@ -90,7 +68,7 @@ const CartComponent: React.FC<CartProps> = ({ cart }) => {
                 <strong>{formattedTotal}</strong>
               </div>
 
-              <Button fullWidth onClick={() => addCheckout(products)}>
+              <Button fullWidth onClick={() => addCheckout(cart)}>
                 Finalizar Compra
               </Button>
 
@@ -105,6 +83,6 @@ const CartComponent: React.FC<CartProps> = ({ cart }) => {
       )}
     </div>
   );
-};
+}
 
-export default CartComponent;
+export default Cart;

@@ -1,12 +1,20 @@
 import constate from "constate";
 import { useEffect, useState } from "react";
-import { useGetProducts } from "../hooks/integration/auth/mutations";
+import {
+  useAddCheckout,
+  useGetProducts,
+} from "../hooks/integration/auth/mutations";
 import { useCustomLocalStorage } from "../hooks/utils/use-custom-local-storage";
+import { CheckoutResponse } from "../types/CheckoutType";
 import { Product } from "../types/ProductType";
-
 function useGlobal() {
-  const [cart, setCart] = useCustomLocalStorage<Product[]>("cart", []);
+  const [cart, setCart, removeCart] = useCustomLocalStorage<Product[]>(
+    "cart",
+    []
+  );
+  const [saleResume, setSaleResume] = useState<CheckoutResponse | null>(null);
   const { data: products } = useGetProducts();
+  const { mutateAsync: addCheckoutMutateAsync, data } = useAddCheckout();
   const [productsList, setProductsList] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -42,11 +50,25 @@ function useGlobal() {
     );
   };
 
-  const addCheckout = (products: Product[]) => {
-    addCheckout(products);
+  const addCheckout = async (products: Product[]) => {
+    await addCheckoutMutateAsync(products);
   };
 
-  return { cart, productsList, addToCart, removeFromCart, addCheckout };
+  useEffect(() => {
+    if (data) {
+      setSaleResume(data);
+      removeCart();
+    }
+  }, [data]);
+
+  return {
+    cart,
+    productsList,
+    addToCart,
+    removeFromCart,
+    addCheckout,
+    saleResume,
+  };
 }
 
 export const [GlobalProvider, useGlobalContext] = constate(useGlobal);

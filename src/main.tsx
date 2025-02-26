@@ -13,14 +13,14 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <ToastContainer />
-    <GlobalProvider>
-      <StrictMode>
-        <BrowserRouter>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <ToastContainer />
+      <GlobalProvider>
+        <StrictMode>
           <MainRoutes />
-        </BrowserRouter>
-      </StrictMode>
-    </GlobalProvider>
-  </QueryClientProvider>
+        </StrictMode>
+      </GlobalProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );
