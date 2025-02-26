@@ -3,6 +3,7 @@ import HeaderLayout from "./layouts/HeaderLayout";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
+import Success from "./pages/Success";
 
 function MainRoutes() {
   return (
@@ -11,6 +12,7 @@ function MainRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<Product />} />
+        <Route path="/success" element={<Success />} />
       </Route>
     </Routes>
   );

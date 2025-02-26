@@ -3,22 +3,20 @@ import { Button } from "../../components/ui/Button";
 import { Link } from "react-router-dom";
 import styles from "./cart.module.scss";
 import { useGlobalContext } from "../../context/global";
+import useFormatter from "../../hooks/utils/use-formatter";
 
 function Cart() {
-  const { productsList } = useGlobalContext();
-  const cartItems = productsList?.slice(0, 3) ?? [];
+  const { cart, removeFromCart } = useGlobalContext();
+  const { formatMoney } = useFormatter();
 
-  const total = cartItems.reduce((acc, item) => acc + item.price, 0);
-  const formattedTotal = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(total);
+  const total = cart.reduce((acc, item) => acc + item.price, 0);
+  const formattedTotal = formatMoney(total);
 
   return (
     <div className={styles.container}>
       <h1>Carrinho de Compras</h1>
 
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <div className={styles.emptyCart}>
           <p>Seu carrinho está vazio</p>
           <Link to="/">
@@ -28,7 +26,7 @@ function Cart() {
       ) : (
         <div className={styles.content}>
           <div className={styles.cartItems}>
-            {cartItems.map((item) => (
+            {cart.map((item) => (
               <div key={item.id} className={styles.cartItem}>
                 <Link to={`/product/${item.id}`} className={styles.productInfo}>
                   <img src={item.imageUrl} alt={item.title} />
@@ -36,19 +34,14 @@ function Cart() {
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
                     <span className={styles.price}>
-                      {new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(item.price)}
+                      {formatMoney(item.price)}
                     </span>
                   </div>
                 </Link>
 
                 <button
                   className={styles.removeButton}
-                  onClick={() => {
-                    /* Implementar remoção */
-                  }}
+                  onClick={() => removeFromCart(item.id)}
                 >
                   <CloseOutlined />
                 </button>

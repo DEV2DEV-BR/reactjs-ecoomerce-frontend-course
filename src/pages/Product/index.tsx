@@ -1,17 +1,29 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "../../components/ui/Button";
 import { CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { useNavigate, useParams } from "react-router-dom";
 import { ProductCard } from "../../components/ProductCard";
-import styles from "./product.module.scss";
+import { Button } from "../../components/ui/Button";
 import { useGlobalContext } from "../../context/global";
+import useFormatter from "../../hooks/utils/use-formatter";
+import styles from "./product.module.scss";
 
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { productsList, addToCart, removeFromCart } = useGlobalContext();
+  const { formatMoney } = useFormatter();
 
-  const { productsList } = useGlobalContext();
   const product = productsList?.find((product) => product.id === id);
   const relatedProducts = productsList?.filter((p) => p.id !== id).slice(0, 4);
+
+  const handleCartAction = () => {
+    if (!product) return;
+
+    if (product.isInCart) {
+      removeFromCart(product.id);
+    } else {
+      addToCart(product.id);
+    }
+  };
 
   if (!product) {
     return (
@@ -21,11 +33,6 @@ export default function Product() {
       </div>
     );
   }
-
-  const formattedPrice = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(product.price);
 
   return (
     <div className={styles.container}>
@@ -37,7 +44,7 @@ export default function Product() {
         <div className={styles.info}>
           <h1>{product.title}</h1>
           <p className={styles.description}>{product.description}</p>
-          <span className={styles.price}>{formattedPrice}</span>
+          <span className={styles.price}>{formatMoney(product.price)}</span>
 
           <div className={styles.details}>
             <h2>Descrição</h2>
@@ -52,7 +59,11 @@ export default function Product() {
           </div>
 
           <div className={styles.actions}>
-            <Button variant={product.isInCart ? "danger" : "primary"} fullWidth>
+            <Button
+              variant={product.isInCart ? "danger" : "primary"}
+              fullWidth
+              onClick={handleCartAction}
+            >
               {product.isInCart ? (
                 <>
                   <CloseOutlined size={20} />
@@ -73,12 +84,7 @@ export default function Product() {
         <h2>Produtos Relacionados</h2>
         <div className={styles.carousel}>
           {relatedProducts?.map((product) => (
-            <ProductCard
-              key={product.id}
-              {...product}
-              onAddToCart={() => {}}
-              onRemoveFromCart={() => {}}
-            />
+            <ProductCard key={product.id} {...product} />
           ))}
         </div>
       </div>

@@ -2,6 +2,8 @@ import { CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import styles from "./product-card.module.scss";
 import { Button } from "../ui/Button";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/global";
+import useFormatter from "../../hooks/utils/use-formatter";
 
 interface ProductCardProps {
   id: string;
@@ -21,22 +23,17 @@ export function ProductCard({
   price,
   imageUrl,
   isInCart,
-  onAddToCart,
-  onRemoveFromCart,
-}: ProductCardProps) {
+}: Omit<ProductCardProps, "onAddToCart" | "onRemoveFromCart">) {
+  const { addToCart, removeFromCart } = useGlobalContext();
+  const { formatMoney } = useFormatter();
   const navigate = useNavigate();
-
-  const formattedPrice = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(price);
 
   function handleCartAction(e: React.MouseEvent) {
     e.stopPropagation();
     if (isInCart) {
-      onRemoveFromCart(id);
+      removeFromCart(id);
     } else {
-      onAddToCart(id);
+      addToCart(id);
     }
   }
 
@@ -51,7 +48,7 @@ export function ProductCard({
         <div className={styles.content}>
           <h3>{title}</h3>
           <p>{description}</p>
-          <span className={styles.price}>{formattedPrice}</span>
+          <span className={styles.price}>{formatMoney(price)}</span>
         </div>
 
         <Button

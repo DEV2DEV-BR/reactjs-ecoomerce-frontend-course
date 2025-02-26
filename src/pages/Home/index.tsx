@@ -12,12 +12,7 @@ function Home() {
 
       <div className={styles.products}>
         {productsList.map((product) => (
-          <ProductCard
-            onAddToCart={() => {}}
-            onRemoveFromCart={() => {}}
-            key={product.id}
-            {...product}
-          />
+          <ProductCard key={product.id} {...product} />
         ))}
       </div>
     </div>
